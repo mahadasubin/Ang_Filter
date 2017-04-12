@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        body {
+            background: #232323;
+        }
+
+        .credits {
+            margin: 15px 0px;
+        }
+
+        .panel {
+            margin: 15px 0px;
+        }</style>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-rc.1/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <div ng-app="filters">
+                <div ng-controller="demo">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h4 class="text-center">AngularJS Filter - Capitalize</h4>
+                            <p><strong>Original:</strong></p>
+                            <ul class="list">
+                                <li>{{example1}}</li>
+                                <li>{{example2}}</li>
+                            </ul>
+                            <p><strong>Capitalize Filter:</strong></p>
+                            <ul class="list">
+                                <li>{{example1 | capitalize}} - Default - Capitalizes the first letter</li>
+                                <li>{{example1 | capitalize:5}} - Capitalizes the 5th letter</li>
+                                <li>{{example1 | capitalize:14}} - Out of bounds, nothing gets capitalized</li>
+                                <li>{{example2 | capitalize}} - Default - If first, letter is capital, does nothing</li>
+                                <li>{{example2 | capitalize:17}} - Capitalizes the 17th letter</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</body>
+<script>
+    var app = angular.module('filters', []);
+
+    app.controller('demo', function($scope){
+        $scope.example1 = "awesome";
+        $scope.example2 = "Honorificabilitudinitatibus"
+    })
+
+    app.filter('capitalize', function(){
+        return function(input, char){
+            if(isNaN(input)){
+                var char = char - 1 || 0;
+                var letter = input.charAt(char).toUpperCase();
+                var out = [];
+                for(var i = 0; i < input.length; i++){
+                    if(i == char){
+                        out.push(letter);
+                    } else {
+                        out.push(input[i]);
+                    }
+                }
+                return out.join('');
+            } else {
+                return input;
+            }
+        }
+    })
+</script>
+</html>
